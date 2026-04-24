@@ -1,0 +1,2 @@
+# Dzhames Bondarev
+soloproject Csharp
