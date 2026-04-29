@@ -1,16 +1,28 @@
 using UnityEngine;
-
+[RequireComponent(typeof(PlayerInputManager))]
 public class Player : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    PlayerInputManager inputManager;
+    IMovement movement;
+    Ijumpable jumpable;
+    Vector2 walkInput;
+    private void Start()
     {
-        
+        inputManager = GetComponent<PlayerInputManager>();
+        movement = GetComponent<IMovement>();
+        jumpable = GetComponent<Ijumpable>();
+    }
+    void Update()
+    {
+        walkInput = inputManager.WalkInput;
+        if (inputManager.JumpPressed)
+        {
+            jumpable?.JumpNow();
+        }
     }
 
-    // Update is called once per frame
-    void FixedUpdate()
+    private void FixedUpdate()
     {
-        
+        movement?.Move(walkInput);
     }
 }

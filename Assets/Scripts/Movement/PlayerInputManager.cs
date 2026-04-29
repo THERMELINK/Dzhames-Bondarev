@@ -2,15 +2,12 @@ using UnityEngine;
 
 public class PlayerInputManager : MonoBehaviour
 {
-    public bool CheckJumpInput()
-    {
-        bool jumpInput = Input.GetButton("Jump");
-        return jumpInput;
-    }
+    public Vector2 WalkInput { get; private set; }
+    public bool JumpPressed { get; private set; }
 
-    public Vector2 CheckWalkInput()
+    private void Update()
     {
-        Vector2 walkInput = new Vector2(Input.GetAxis("Horizontal"), 0);
-        return walkInput;
+        WalkInput = new Vector2(Input.GetAxis("Horizontal"), 0);
+        JumpPressed = Input.GetButton("Jump");
     }
 }

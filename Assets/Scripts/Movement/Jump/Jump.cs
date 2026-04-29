@@ -1,19 +1,20 @@
 using System.Collections;
 using UnityEngine;
 
-public class Jump : MonoBehaviour
+public class Jump : MonoBehaviour, Ijumpable
 {
     int jumpPower = 5;
     bool canJump = true;
     bool collidedWithGround = true;
-    public void JumpObject()
+    public void JumpNow()
     {
+
         if (canJump == true && collidedWithGround == true)
         {
+            print("jump");
             StartCoroutine(ActualJump());
         }
     }
-
     IEnumerator ActualJump()
     {
         Vector2 jumpVector = Vector2.up * jumpPower;
