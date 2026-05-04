@@ -185,9 +185,13 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2145725399139310424, guid: e947c06371bafe34e8143e19075b94f7, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 1433577858, guid: 43009ec05021ee4439b87fde23244d9c, type: 3}
     - target: {fileID: 4986019479372154249, guid: e947c06371bafe34e8143e19075b94f7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.44
+      value: -4.49
       objectReference: {fileID: 0}
     - target: {fileID: 4986019479372154249, guid: e947c06371bafe34e8143e19075b94f7, type: 3}
       propertyPath: m_LocalPosition.y
@@ -236,6 +240,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5603259284084570150, guid: e947c06371bafe34e8143e19075b94f7, type: 3}
       insertIndex: -1
       addedObject: {fileID: 816737957}
+    - targetCorrespondingSourceObject: {fileID: 5603259284084570150, guid: e947c06371bafe34e8143e19075b94f7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 816737965}
   m_SourcePrefab: {fileID: 100100000, guid: e947c06371bafe34e8143e19075b94f7, type: 3}
 --- !u!1 &415819983
 GameObject:
@@ -436,6 +443,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05b95792954467745b97cc33a8a70513, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
+--- !u!114 &816737965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 816737949}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f8644524202ef6458edda235f38e025, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FollowMouseRotate
 --- !u!1 &1922699856
 GameObject:
   m_ObjectHideFlags: 0
