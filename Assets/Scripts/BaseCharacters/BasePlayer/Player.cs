@@ -6,7 +6,10 @@ public class Player : MonoBehaviour
     IMovement movement;
     Ijumpable jumpable;
     Ilookable lookable;
+    Ishootable shootable;
     Vector2 walkInput;
+
+    [SerializeField] GameObject equippedGun;
     private void Start()
     {
         inputManager = GetComponent<PlayerInputManager>();
@@ -22,7 +25,20 @@ public class Player : MonoBehaviour
         {
             jumpable?.JumpNow();
         }
+
+        if (inputManager.ShootPressed)
+        {
+            if (equippedGun != null)
+            {
+
+                shootable = equippedGun.GetComponent<Ishootable>();
+                print("shootInput");
+                shootable?.ShootBullet();
+
+            }
+        }
     }
+    //-10 > 40
 
     private void FixedUpdate()
     {

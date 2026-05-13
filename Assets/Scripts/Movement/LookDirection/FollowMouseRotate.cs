@@ -52,6 +52,5 @@ public class FollowMouseRotate : MonoBehaviour, Ilookable
             currentScale.x = Mathf.Abs(currentScale.x);
         }
         thisPlayer.transform.localScale = currentScale;
-
     }
 }
