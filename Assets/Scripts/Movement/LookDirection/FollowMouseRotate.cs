@@ -42,15 +42,16 @@ public class FollowMouseRotate : MonoBehaviour, Ilookable
     {
         mousePositionToPlayer temp = DecideMousePositionToPlayer();
         Vector2 currentScale = thisPlayer.transform.localScale;
+        SpriteRenderer renderer = thisPlayer.GetComponent<SpriteRenderer>();
 
         if (temp == mousePositionToPlayer.Left)
         {
-            currentScale.x = -Mathf.Abs(currentScale.x);
+            renderer.flipX = true;
         }
         else
         {
-            currentScale.x = Mathf.Abs(currentScale.x);
+            renderer.flipX = false;
         }
-        thisPlayer.transform.localScale = currentScale;
+        //thisPlayer.transform.localScale = currentScale;
     }
 }

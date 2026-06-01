@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
         movement = GetComponent<IMovement>();
         jumpable = GetComponent<Ijumpable>();
         lookable = GetComponent<Ilookable>();
+        shootable = GetComponentInChildren<Ishootable>();
     }
     void Update()
     {
@@ -34,8 +35,12 @@ public class Player : MonoBehaviour
                 shootable = equippedGun.GetComponent<Ishootable>();
                 print("shootInput");
                 shootable?.ShootBullet();
-
             }
+        }
+
+        if(inputManager.ReloadPressed)
+        {
+            shootable.ReloadMagazine();
         }
     }
     //-10 > 40

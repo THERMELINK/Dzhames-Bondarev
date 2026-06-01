@@ -7,10 +7,13 @@ public class PlayerInputManager : MonoBehaviour
 
     public bool ShootPressed { get; private set; }
 
+    public bool ReloadPressed { get; private set; }
+
     private void Update()
     {
         WalkInput = new Vector2(Input.GetAxis("Horizontal"), 0);
         JumpPressed = Input.GetButton("Jump");
         ShootPressed = Input.GetButton("Fire");
+        ReloadPressed = Input.GetButton("Reload");
     }
 }
