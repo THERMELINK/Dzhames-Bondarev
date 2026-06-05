@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 using static UnityEngine.Rendering.DebugUI;
@@ -19,6 +20,7 @@ public class CameraManager : MonoBehaviour, CameraInterface
     void Start()
     {
         OrtographicCameraSize = gameObject.GetComponent<Camera>().orthographicSize;
+        Player.OnScroll += ControlZoom;
     }
 
     // Update is called once per frame
@@ -38,7 +40,7 @@ public class CameraManager : MonoBehaviour, CameraInterface
 
     public void ControlZoom(float deltaZoomInput)
     {
-        OrtographicCameraSize += deltaZoomInput;
+        OrtographicCameraSize -= deltaZoomInput;
         OrtographicCameraSize = Mathf.Clamp(OrtographicCameraSize, camMinZoom, camMaxZoom);
         gameObject.GetComponent<Camera>().orthographicSize = OrtographicCameraSize;
     }
@@ -47,5 +49,8 @@ public class CameraManager : MonoBehaviour, CameraInterface
     {
         yield return new WaitForSeconds(seconds);
     }
-
+    private void OnDisable()
+    {
+        Player.OnScroll -= ControlZoom;
+    }
 }
