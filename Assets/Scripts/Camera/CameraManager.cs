@@ -32,6 +32,8 @@ public class CameraManager : MonoBehaviour, CameraInterface
     public void FollowPlayer(GameObject player)
     {
         currentLockedObject = player;
+        gameObject.transform.SetParent(player.transform);
+        gameObject.transform.localPosition = new Vector3(0,0,-10);
     }
     public void FocusOnObject(GameObject objectToFocus)
     {

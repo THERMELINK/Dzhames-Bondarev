@@ -19,12 +19,16 @@ public class HealthManager : MonoBehaviour, Health
 
     public void RemoveHealth(float amount)
     {
-
+        currentHealth -= amount;
+        if(CheckIfDead())
+        {
+            TestDead();
+        }
     }
 
     public void AddHealth(float amount)
     {
-
+        currentHealth += amount;
     }
 
     public void TellHealth()
@@ -36,5 +40,10 @@ public class HealthManager : MonoBehaviour, Health
     {
         bool returnThing = (currentHealth <= 0) ? true : false;
         return returnThing;
+    }
+
+    void TestDead()
+    {
+        Destroy(gameObject);
     }
 }

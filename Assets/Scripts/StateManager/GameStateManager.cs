@@ -16,6 +16,7 @@ public class GameStateManager : MonoBehaviour
 
     [SerializeField] GameObject playerObject;
     [SerializeField] List<GameObject> enemyObjects = new();
+    [SerializeField] Camera cam;
 
 
     bool playerCanMove = false;
@@ -91,6 +92,7 @@ public class GameStateManager : MonoBehaviour
                 break;
             case GameState.Playing:
                 SetEntitiesMovementTo(true);
+                cam.GetComponent<CameraInterface>().FollowPlayer(playerObject);
                 break;
             case GameState.Cutscene:
                 StartCutScene(3);
