@@ -5,5 +5,5 @@ public interface Ilookable
 {
     Vector2 getMouseWorldSpacePosition();
 
-    void RotatePlayerToPosition();
+    void RotatePlayerToPosition(Vector2 position);
 }

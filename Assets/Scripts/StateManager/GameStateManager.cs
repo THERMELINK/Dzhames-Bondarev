@@ -58,7 +58,6 @@ public class GameStateManager : MonoBehaviour
             previousState = currentState;
             currentState = newState;
             EnterNewState(newState);
-            print("newstate");
             CanPlayerMove?.Invoke(playerCanMove);
             canEnemyMove?.Invoke(enemiesCanMove);
         }
@@ -82,6 +81,8 @@ public class GameStateManager : MonoBehaviour
     {
         StartCoroutine(CutSceneDelayBeforeMovement(time));
     }
+
+    public GameObject TellPlayerObject() => playerObject;
 
     void EnterNewState(GameState state)
     {

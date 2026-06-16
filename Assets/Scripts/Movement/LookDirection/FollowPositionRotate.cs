@@ -4,7 +4,7 @@ using UnityEngine;
 public class FollowMouseRotate : MonoBehaviour, Ilookable
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    public enum mousePositionToPlayer
+    public enum deltaPositionFromCharacter
     {
         Left,
         Right,
@@ -21,30 +21,31 @@ public class FollowMouseRotate : MonoBehaviour, Ilookable
     /// this method keeps track of the mouse position according to the player position
     /// if the mouse is on the left of the player, the player should flip to face the left etc
     /// </summary>
-    mousePositionToPlayer DecideMousePositionToPlayer()
+    deltaPositionFromCharacter DecideMousePositionToPlayer(Vector2 position)
     {
         float playerPositionX = thisPlayer.transform.position.x;
-        float mousePointerPositionX = getMouseWorldSpacePosition().x;
-        mousePositionToPlayer temp = mousePositionToPlayer.Right;
+        float mousePointerPositionX = position.x;
+        deltaPositionFromCharacter temp = deltaPositionFromCharacter.Right;
 
         float result = (playerPositionX - mousePointerPositionX);
         if (result >= 0)
         {
-            temp = mousePositionToPlayer.Left;
+            temp = deltaPositionFromCharacter.Left;
         }
         else
         {
-            temp = mousePositionToPlayer.Right;
+            temp = deltaPositionFromCharacter.Right;
         }
         return temp;
     }
-    public void RotatePlayerToPosition()
+
+    public void RotatePlayerToPosition(Vector2 position)
     {
-        mousePositionToPlayer temp = DecideMousePositionToPlayer();
+        deltaPositionFromCharacter temp = DecideMousePositionToPlayer(position);
         Vector2 currentScale = thisPlayer.transform.localScale;
         SpriteRenderer renderer = thisPlayer.GetComponent<SpriteRenderer>();
 
-        if (temp == mousePositionToPlayer.Left)
+        if (temp == deltaPositionFromCharacter.Left)
         {
             renderer.flipX = true;
         }

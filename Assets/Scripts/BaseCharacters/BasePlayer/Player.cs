@@ -39,7 +39,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         walkInput = inputManager.WalkInput;
-        lookable?.RotatePlayerToPosition();
+        lookable?.RotatePlayerToPosition(inputManager.MousePosition);
         if (gunInputs != null && equippedGun != null)
         {
             gunInputs();
@@ -58,15 +58,14 @@ public class Player : MonoBehaviour
 
     void CheckShootInput()
     {
-
+        shootable?.LookAtTarget(inputManager.MousePosition);
         if (inputManager.ShootPressed)
         {
             if (equippedGun != null)
             {
-
                 shootable = equippedGun.GetComponent<Ishootable>();
                 print("shootInput");
-                shootable?.ShootBullet();
+                shootable?.ShootBullet(inputManager.MousePosition);
             }
         }
     }

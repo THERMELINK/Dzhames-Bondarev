@@ -2,11 +2,11 @@ using UnityEngine;
 
 public interface Ishootable
 {
-    void ShootBullet();
+    void ShootBullet(Vector2 target);
 
     void ReloadMagazine();
 
-    void LookAtTarget();
+    void LookAtTarget(Vector2 target);
 
     void Initialise();
 }

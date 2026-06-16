@@ -8,9 +8,10 @@ public class TestGunScript : MonoBehaviour, Ishootable
     [SerializeField] GameObject gunOwner;
     [SerializeField] GameObject bulletToShoot;
     [SerializeField] GameObject bulletShootPoint;
+
     public float localXPosition = 0.3f;
     public float bulletspeed = 5f;
-    public float shotTimer = 0.2f;
+    public float shotTimer = 0.4f;
     public int shotsInMagazine = 20;
     public int shotsLeft = 20;
     bool canShoot = true;
@@ -26,7 +27,7 @@ public class TestGunScript : MonoBehaviour, Ishootable
     {
         if (gunOwner != null)
         {
-            LookAtTarget();
+            
         }
     }
 
@@ -35,9 +36,8 @@ public class TestGunScript : MonoBehaviour, Ishootable
         Initialise();
     }
 
-    public void ShootBullet()
+    public void ShootBullet(Vector2 actualTarget)
     {
-        print("shootOutput");
         if (canShoot && shotsLeft > 0)
         {
             shotsLeft--;
@@ -57,15 +57,15 @@ public class TestGunScript : MonoBehaviour, Ishootable
         }
     }
 
-    public void LookAtTarget()
+    public void LookAtTarget(Vector2 target)
     {
         //set Y axis to -1
         float localYposition = 1f;
         Vector2 from = gunOwner.transform.position;
-        Vector2 to = GetMousePosition();
+        Vector2 to = target;
         Vector2 direction = to - from;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(0, 0, angle);
+        gameObject.transform.rotation = Quaternion.Euler(0, 0, angle);
 
         //check if parent sprite if flipped
         if (gameObject.transform.parent.GetComponent<SpriteRenderer>().flipX == true)

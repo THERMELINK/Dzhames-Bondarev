@@ -7,6 +7,8 @@ public class PlayerInputManager : MonoBehaviour
     public bool ShootPressed { get; private set; }
     public bool ReloadPressed { get; private set; }
 
+    public Vector2 MousePosition { get; private set; }
+
     public bool DropGunPressed { get; private set; }
     public bool Interact { get; private set; }
     public float Scroll { get; private set; }
@@ -14,7 +16,7 @@ public class PlayerInputManager : MonoBehaviour
     GameStateManager stateManager;
     [SerializeField] bool ActionsAllowed = true;
 
-    private void Awake()
+    private void Start()
     {
         stateManager = GameStateManager.instance;
         stateManager.CanPlayerMove += ChangePlayerMovementEnabled;
@@ -31,6 +33,7 @@ public class PlayerInputManager : MonoBehaviour
             DropGunPressed = Input.GetButton("DropGun");
             Interact = Input.GetButton("Interact");
             Scroll = Input.GetAxis("Scroll");
+            MousePosition = Camera.main.ScreenToWorldPoint((Vector2)Input.mousePosition);
         }
     }
 

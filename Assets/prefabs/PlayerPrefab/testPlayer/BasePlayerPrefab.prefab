@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 2145725399139310424}
   - component: {fileID: -7288504541267688962}
   - component: {fileID: 1780132803444040411}
-  - component: {fileID: 7259591358334787751}
   - component: {fileID: -3936136959040913813}
   - component: {fileID: 824029546615925455}
   m_Layer: 0
@@ -169,18 +168,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &7259591358334787751
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5603259284084570150}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c52264ea8982ac3479d19a0ca0f91a71, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerInputManager
 --- !u!114 &-3936136959040913813
 MonoBehaviour:
   m_ObjectHideFlags: 0
