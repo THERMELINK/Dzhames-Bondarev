@@ -31,7 +31,7 @@ public class EnemyInputManager : MonoBehaviour
         {
             WalkInput = TellWalkDirection(player);
             ShootPressed = PressShoot();
-            if(changeTargetPosition == true)
+            if (changeTargetPosition == true)
             {
                 StartCoroutine(ChangeTargetPosDelay());
             }
@@ -59,14 +59,14 @@ public class EnemyInputManager : MonoBehaviour
     {
         bool shootNow = false;
         OverrideTargetPosition(GameStateManager.instance.TellPlayerObject().transform.position);
-        if(TellDistanceFromPlayer(player) < shootAtDistance)
+        if (TellDistanceFromPlayer(player) < shootAtDistance)
         {
             shootNow = true;
         }
         return shootNow;
     }
 
-    void OverrideTargetPosition(Vector2 playerPos)
+    public void OverrideTargetPosition(Vector2 playerPos)
     {
         TargetPosition = playerPos;
     }

@@ -470,7 +470,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4986019479372154249, guid: e947c06371bafe34e8143e19075b94f7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.424
+      value: -4.26
       objectReference: {fileID: 0}
     - target: {fileID: 4986019479372154249, guid: e947c06371bafe34e8143e19075b94f7, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1043,6 +1043,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f42bb8d155e4e84087fd9a27ba9ec17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
+  currentState: 0
   equippedGun: {fileID: 208966272}
   testInput: {x: 0, y: 0}
 --- !u!114 &928888884
