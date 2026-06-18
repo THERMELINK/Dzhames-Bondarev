@@ -14,7 +14,7 @@ public class PlayerInputManager : MonoBehaviour
     public float Scroll { get; private set; }
 
     GameStateManager stateManager;
-    [SerializeField] bool ActionsAllowed = true;
+    [SerializeField] bool ActionsAllowed = false;
 
     private void Start()
     {

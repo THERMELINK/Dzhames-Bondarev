@@ -25,15 +25,16 @@ public class Enemy : MonoBehaviour
     //rotates the playersprite!!
     Ilookable lookable;
     Ishootable shootable;
+    Ipatrol patrol;
     Vector2 walkInput = Vector2.zero;
     [SerializeField] GameObject equippedGun;
     EnemyInputManager inputManager;
     [SerializeField] Vector2 testInput;
     bool isWalking = false;
+    bool waitingForJump = false;
     Vector2 patrolPointA;
     Vector2 patrolPointB;
     Vector2 lockedOnCurrentPoint;
-
 
 
     void Start()
@@ -43,12 +44,15 @@ public class Enemy : MonoBehaviour
         movement = GetComponent<IMovement>();
         jumpable = GetComponent<Ijumpable>();
         lookable = GetComponent<Ilookable>();
+        patrol = GetComponent<Ipatrol>();
+        jumpable = GetComponent <Ijumpable>();
 
         float offset = 2;
         Vector2 startPosition = transform.position;
         patrolPointA = new Vector2(startPosition.x - offset, startPosition.y);
         patrolPointB = new Vector2(startPosition.x + offset, startPosition.y);
         previousState = currentState;
+
     }
 
     // Update is called once per frame
@@ -68,7 +72,11 @@ public class Enemy : MonoBehaviour
             case enemyStates.Inactive:
                 break;
             case enemyStates.Patrolling:
-                HandlePatrol();
+                patrol?.HandlePatrol();
+                if(waitingForJump == false)
+                {
+                    StartCoroutine(RandomJumpTimer());
+                }
                 break;
             case enemyStates.Aggro:
                 HandleAggro();
@@ -76,24 +84,9 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    void HandlePatrol()
-    {
-        if (Vector2.Distance(transform.position, lockedOnCurrentPoint) < 0.1f)
-        {
-            if (lockedOnCurrentPoint == patrolPointA)
-                lockedOnCurrentPoint = patrolPointB;
-            else
-                lockedOnCurrentPoint = patrolPointA;
-        }
-        Vector2 direction = (lockedOnCurrentPoint - (Vector2)transform.position).normalized;
-        print(direction);
-        print(lockedOnCurrentPoint);
-        WalkToPosition(direction, 0.6f);
-    }
 
     void HandleAggro()
     {
-        //walk towards the player and shoot in the meantime
         lookable?.RotatePlayerToPosition(inputManager.TargetPosition);
         shootable?.LookAtTarget(inputManager.TargetPosition);
         if (inputManager.ShootPressed)
@@ -102,24 +95,35 @@ public class Enemy : MonoBehaviour
         }
         if (isWalking == false)
         {
-            StartCoroutine(WalkToPositionWithDelay(inputManager.TargetPosition, 0.3f));
+            StartCoroutine(WalkToPositionWithDelay(inputManager.TargetPosition, 0.1f));
         }
+    }
+
+    IEnumerator RandomJumpTimer()
+    {
+        waitingForJump = true;
+        //interchangeable during runtime
+        GetComponent<Ijumpable>()?.JumpNow();
+        print(GetComponent<Ijumpable>());
+        print("ememyJump");
+        yield return new WaitForSeconds(1);
+        waitingForJump = false;
     }
 
     IEnumerator WalkToPositionWithDelay(Vector2 thisWalkInput, float movementSpeed)
     {
         isWalking = true;
         float timer = 1f;
-        if (timer > 0)
+        while (timer > 0)
         {
             movement?.Move(thisWalkInput * movementSpeed);
             timer -= Time.deltaTime;
             yield return null; //apparently this waits just for 1 frame
         }
-        //yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(2);
         isWalking = false;
     }
-    void WalkToPosition(Vector2 thisWalkInput, float movementSpeed)
+    public void WalkToPosition(Vector2 thisWalkInput, float movementSpeed)
     {
         movement?.Move(thisWalkInput * movementSpeed);
     }

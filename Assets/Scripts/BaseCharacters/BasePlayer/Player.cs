@@ -13,8 +13,6 @@ public class Player : MonoBehaviour
     Ishootable shootable;
     Vector2 walkInput;
 
-    bool PlayerMovementEnabled;
-
     //lists interactableItems
     IIinteractable[] interactables;
 
@@ -35,17 +33,20 @@ public class Player : MonoBehaviour
         movement = GetComponent<IMovement>();
         jumpable = GetComponent<Ijumpable>();
         lookable = GetComponent<Ilookable>();
+        gameStateManager = GameStateManager.instance;
     }
     void Update()
     {
+
         walkInput = inputManager.WalkInput;
         lookable?.RotatePlayerToPosition(inputManager.MousePosition);
+        CheckJumpInput();
+        CheckInteractInput();
+
         if (gunInputs != null && equippedGun != null)
         {
             gunInputs();
         }
-        CheckJumpInput();
-        CheckInteractInput();
         CheckScrollInput();
     }
     //-10 > 40

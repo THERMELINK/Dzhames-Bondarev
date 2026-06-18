@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class Jump : MonoBehaviour, Ijumpable
+public class DoubleJump : MonoBehaviour, Ijumpable
 {
     int jumpPower = 5;
     bool canJump = true;
@@ -19,6 +19,8 @@ public class Jump : MonoBehaviour, Ijumpable
     {
         collidedWithGround = false;
         Vector2 jumpVector = Vector2.up * jumpPower;
+        gameObject.GetComponent<Rigidbody2D>().AddForce(jumpVector, ForceMode2D.Impulse);
+        yield return new WaitForSeconds(0.5f);
         gameObject.GetComponent<Rigidbody2D>().AddForce(jumpVector, ForceMode2D.Impulse);
         canJump = false;
         yield return new WaitForSeconds(1.5f);
