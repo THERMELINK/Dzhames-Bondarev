@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class GameStateManager : MonoBehaviour
 {
+    //singleton
     public static GameStateManager instance;
     [SerializeField] GameState currentState = GameState.NotActive;
     GameState previousState = GameState.Failed;
@@ -22,6 +23,8 @@ public class GameStateManager : MonoBehaviour
     bool playerCanMove = false;
     bool enemiesCanMove = false;
 
+
+    //the possible states that the game can be in
     public enum GameState
     {
         NotActive,
@@ -31,8 +34,10 @@ public class GameStateManager : MonoBehaviour
         Failed
     }
 
+
     void Awake()
     {
+        //creates a singleton from the state manager so every script can see easily what state it should be in
         if (instance == null)
         {
             instance = this;
@@ -63,12 +68,19 @@ public class GameStateManager : MonoBehaviour
         }
     }
 
+
+    /// <summary>
+    /// this method sets all the movement bools from entities to a value
+    /// </summary>
     void SetEntitiesMovementTo(bool status)
     {
         playerCanMove = status;
         enemiesCanMove = status;
     }
 
+    /// <summary>
+    /// creates a small delay where the player can not move, after delay sets all entities movement to active
+    /// </summary>
     IEnumerator CutSceneDelayBeforeMovement(float amountOfTime)
     {
         SetEntitiesMovementTo(false);
@@ -77,13 +89,23 @@ public class GameStateManager : MonoBehaviour
         CheckChangeInGameState(GameState.Playing);
     }
 
+    /// <summary>
+    /// this method runs when a cutscene is activated, this method sets the delay until movement 
+    /// </summary>
     void StartCutScene(float time)
     {
         StartCoroutine(CutSceneDelayBeforeMovement(time));
     }
 
+
+    /// <summary>
+    /// this method gives the player object to scripts that need it (for example a newly instantiated enemy who is clueless)
+    /// </summary>
     public GameObject TellPlayerObject() => playerObject;
 
+    /// <summary>
+    /// this method manages a new state and changes the behavior that the entities can do
+    /// </summary>
     void EnterNewState(GameState state)
     {
         switch (state)

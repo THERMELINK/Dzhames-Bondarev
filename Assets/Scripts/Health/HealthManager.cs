@@ -11,38 +11,49 @@ public class HealthManager : MonoBehaviour, Health
         currentHealth = maxHealth;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
 
-    }
-
+    /// <summary>
+    /// removes a certain amount of health from the game object it is on
+    /// also checks if its dead after health is removed
+    /// </summary>
     public void RemoveHealth(float amount)
     {
         currentHealth -= amount;
         if(CheckIfDead())
         {
-            TestDead();
+            BeDead();
         }
     }
 
+    /// <summary>
+    /// this method adds a certain amount of health
+    /// not implemented yet, but usefull for pickups
+    /// </summary>
     public void AddHealth(float amount)
     {
         currentHealth += amount;
     }
 
-    public void TellHealth()
-    {
 
-    }
+    /// <summary>
+    /// tells the current health from this object
+    /// </summary>
+    public float TellHealth() => currentHealth;
 
+
+    /// <summary>
+    /// checks if the health is lower or equal than 0
+    /// </summary>
     public bool CheckIfDead()
     {
         bool returnThing = (currentHealth <= 0) ? true : false;
         return returnThing;
     }
 
-    void TestDead()
+    /// <summary>
+    /// currently removes the game object from the scene
+    /// </summary>
+    void BeDead()
     {
         Destroy(gameObject);
     }

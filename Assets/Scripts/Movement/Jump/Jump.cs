@@ -6,15 +6,23 @@ public class Jump : MonoBehaviour, Ijumpable
     int jumpPower = 5;
     bool canJump = true;
     bool collidedWithGround = true;
+
+    /// <summary>
+    /// interface member
+    /// lets the gameobject its on jump
+    /// </summary>
     public void JumpNow()
     {
-
         if (canJump == true && collidedWithGround == true)
         {
             print("jump");
             StartCoroutine(ActualJump());
         }
     }
+
+    /// <summary>
+    /// this method lets the gameobject jump, but checks if its collided with the ground, and if the timer for canjump is over
+    /// </summary>
     IEnumerator ActualJump()
     {
         collidedWithGround = false;
@@ -26,6 +34,7 @@ public class Jump : MonoBehaviour, Ijumpable
         print("can jump again");
     }
 
+    //checks for collission with ground, or enemy
     private void OnCollisionEnter2D(Collision2D collision)
     {
         collidedWithGround = true;

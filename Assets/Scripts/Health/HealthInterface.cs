@@ -7,7 +7,7 @@ interface Health
 
     void AddHealth(float amount);
 
-    void TellHealth();
+    float TellHealth();
 
     public bool CheckIfDead();
 }

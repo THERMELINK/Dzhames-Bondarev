@@ -4,7 +4,9 @@ using UnityEngine;
 public class FollowMouseRotate : MonoBehaviour, Ilookable
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    public enum deltaPositionFromCharacter
+
+    //possible positions for the mouse from the player
+    enum deltaPositionFromCharacter
     {
         Left,
         Right,
@@ -16,6 +18,10 @@ public class FollowMouseRotate : MonoBehaviour, Ilookable
         thisPlayer = gameObject;
     }
 
+    /// <summary>
+    /// gets the mouse position
+    /// </summary>
+    /// <returns></returns>
     public Vector2 getMouseWorldSpacePosition() => Camera.main.ScreenToWorldPoint((Vector2)Input.mousePosition);
     /// <summary>
     /// this method keeps track of the mouse position according to the player position
@@ -39,6 +45,10 @@ public class FollowMouseRotate : MonoBehaviour, Ilookable
         return temp;
     }
 
+    /// <summary>
+    /// changes the player sprite X scale so it faces a certain position 
+    /// for example, a mouse position
+    /// </summary>
     public void RotatePlayerToPosition(Vector2 position)
     {
         deltaPositionFromCharacter temp = DecideMousePositionToPlayer(position);

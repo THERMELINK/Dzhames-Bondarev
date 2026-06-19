@@ -8,5 +8,5 @@ public interface Ishootable
 
     void LookAtTarget(Vector2 target);
 
-    void Initialise();
+    void CheckForParent();
 }

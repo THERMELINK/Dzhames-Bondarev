@@ -7,11 +7,11 @@ public class BurstFireGun : MonoBehaviour, Ishootable
     [SerializeField] GameObject bulletToShoot;
     [SerializeField] GameObject bulletShootPoint;
 
-    public float localXPosition = 0.3f;
-    public float bulletspeed = 5f;
-    public float shotTimer = 0.4f;
-    public int shotsInMagazine = 21;
-    public int shotsLeft = 20;
+    float localXPosition = 0.3f;
+    float bulletspeed = 5f;
+    float shotTimer = 0.4f;
+    int shotsInMagazine = 21;
+    int shotsLeft = 20;
     bool canShoot = true;
     bool cooldown = false;
     bool isReloading = false;
@@ -21,20 +21,15 @@ public class BurstFireGun : MonoBehaviour, Ishootable
         gameObject.transform.localPosition = new Vector3(localXPosition, 0.10f, 0);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (gunOwner != null)
-        {
-
-        }
-    }
-
     private void FixedUpdate()
     {
-        Initialise();
+        CheckForParent();
     }
 
+    /// <summary>
+    /// shoots shoots the gun item
+    /// this gun shoots 3 bullet burst, with each bullet having a delay of 0.3 seconds
+    /// </summary>
     public void ShootBullet(Vector2 actualTarget)
     {
         if (canShoot && shotsLeft > 0)
@@ -50,6 +45,10 @@ public class BurstFireGun : MonoBehaviour, Ishootable
         }
     }
 
+    /// <summary>
+    /// shoots a series of bullets (burst)
+    /// there is a check if there is still enough bullets in the magazine 
+    /// </summary>
     IEnumerator ShootBullets(int amount, float delayPerShot)
     {
         cooldown = true;
@@ -66,6 +65,10 @@ public class BurstFireGun : MonoBehaviour, Ishootable
         cooldown = false;
     }
 
+
+    /// <summary>
+    /// this method starts the reloading timer 
+    /// </summary>
     public void ReloadMagazine()
     {
         if (isReloading == false)
@@ -74,6 +77,9 @@ public class BurstFireGun : MonoBehaviour, Ishootable
         }
     }
 
+    /// <summary>
+    /// this method rotates the gun in a certain direction
+    /// </summary>
     public void LookAtTarget(Vector2 target)
     {
         //set Y axis to -1
@@ -101,11 +107,18 @@ public class BurstFireGun : MonoBehaviour, Ishootable
         //bulletShootPoint.transform.localPosition = new Vector3(localXScale, 0, 0);
     }
 
-    public void Initialise()
+    /// <summary>
+    /// checks the parent of this gun, and sets it as the owner
+    /// </summary>
+    public void CheckForParent()
     {
         gunOwner = gameObject.transform.parent.gameObject;
     }
 
+
+    /// <summary>
+    /// this method creates a single bullet, sets its position to the bullet position (differentiates per gun) and initialises the bullet with a velocity
+    /// </summary>
     IEnumerator createBullet()
     {
         canShoot = false;
@@ -117,6 +130,9 @@ public class BurstFireGun : MonoBehaviour, Ishootable
         canShoot = true;
     }
 
+    /// <summary>
+    /// this method resets the shots in the magazine after a delay
+    /// </summary>
     IEnumerator reloadTimer(float timeToReload)
     {
         canShoot = false;

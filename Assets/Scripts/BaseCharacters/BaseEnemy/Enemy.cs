@@ -6,6 +6,9 @@ using static UnityEditor.VersionControl.Asset;
 [RequireComponent(typeof(EnemyInputManager))]
 public class Enemy : MonoBehaviour
 {
+    /// <summary>
+    /// the enemy has 3 states, inactive, patrolling and aggressive
+    /// </summary>
     enum enemyStates
     {
         Inactive,
@@ -14,27 +17,29 @@ public class Enemy : MonoBehaviour
     }
 
     [SerializeField] enemyStates currentState = enemyStates.Inactive;
+    [SerializeField] GameObject equippedGun;
+
+    //interfaces on enemy
     enemyStates previousState;
-
-    //enemyInputManager
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-
     IMovement movement;
     Ijumpable jumpable;
-    //rotates the playersprite!!
     Ilookable lookable;
     Ishootable shootable;
     Ipatrol patrol;
+
+    //vector to keep track of the walk input
     Vector2 walkInput = Vector2.zero;
-    [SerializeField] GameObject equippedGun;
-    EnemyInputManager inputManager;
-    [SerializeField] Vector2 testInput;
-    bool isWalking = false;
-    bool waitingForJump = false;
+
+    //vector to keep track of patrol points and current patrol point
     Vector2 patrolPointA;
     Vector2 patrolPointB;
     Vector2 lockedOnCurrentPoint;
+
+    EnemyInputManager inputManager;
+
+    bool isWalking = false;
+    bool waitingForJump = false;
+
 
 
     void Start()
@@ -45,14 +50,14 @@ public class Enemy : MonoBehaviour
         jumpable = GetComponent<Ijumpable>();
         lookable = GetComponent<Ilookable>();
         patrol = GetComponent<Ipatrol>();
-        jumpable = GetComponent <Ijumpable>();
+        jumpable = GetComponent<Ijumpable>();
 
+        //both patrol points are startposition - or + 2 (left and right from origin)
         float offset = 2;
         Vector2 startPosition = transform.position;
         patrolPointA = new Vector2(startPosition.x - offset, startPosition.y);
         patrolPointB = new Vector2(startPosition.x + offset, startPosition.y);
         previousState = currentState;
-
     }
 
     // Update is called once per frame
@@ -65,6 +70,8 @@ public class Enemy : MonoBehaviour
         HandleStateManager();
     }
 
+
+    //handles an action based on the current state
     void HandleStateManager()
     {
         switch (currentState)
@@ -73,7 +80,8 @@ public class Enemy : MonoBehaviour
                 break;
             case enemyStates.Patrolling:
                 patrol?.HandlePatrol();
-                if(waitingForJump == false)
+                //adds a jump in the patrol because they feel like it
+                if (waitingForJump == false)
                 {
                     StartCoroutine(RandomJumpTimer());
                 }
@@ -84,7 +92,10 @@ public class Enemy : MonoBehaviour
         }
     }
 
-
+    /// <summary>
+    /// handles the aggressive fase of the enemy
+    /// basically it looks at the player and shoots its equipped gun
+    /// </summary>
     void HandleAggro()
     {
         lookable?.RotatePlayerToPosition(inputManager.TargetPosition);
@@ -93,12 +104,12 @@ public class Enemy : MonoBehaviour
         {
             shootable?.ShootBullet(inputManager.TargetPosition);
         }
-        if (isWalking == false)
-        {
-            StartCoroutine(WalkToPositionWithDelay(inputManager.TargetPosition, 0.1f));
-        }
     }
 
+
+    /// <summary>
+    /// activates the jump Ienumerator 
+    /// </summary>
     IEnumerator RandomJumpTimer()
     {
         waitingForJump = true;
@@ -110,6 +121,10 @@ public class Enemy : MonoBehaviour
         waitingForJump = false;
     }
 
+    /// <summary>
+    /// walks to a position, but with a small delay after getting to the point
+    /// currently does not function well, so removed it from aggro behavior
+    /// </summary>
     IEnumerator WalkToPositionWithDelay(Vector2 thisWalkInput, float movementSpeed)
     {
         isWalking = true;
@@ -123,6 +138,10 @@ public class Enemy : MonoBehaviour
         yield return new WaitForSeconds(2);
         isWalking = false;
     }
+
+    /// <summary>
+    /// walks to a position according to an input and movement speed
+    /// </summary>
     public void WalkToPosition(Vector2 thisWalkInput, float movementSpeed)
     {
         movement?.Move(thisWalkInput * movementSpeed);
