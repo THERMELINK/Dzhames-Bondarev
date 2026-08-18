@@ -28,7 +28,7 @@ public class EnemyPatrol : MonoBehaviour, Ipatrol
         if (walkingToPoint == false)
         {
             //walk to a point, this takes X amount of time
-            StartCoroutine(WaitOnPoint(1));
+            StartCoroutine(WaitOnPoint(3));
         }
 
         //calculates the direction
