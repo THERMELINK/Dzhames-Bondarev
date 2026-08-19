@@ -1,3 +1,4 @@
+using NUnit.Framework.Constraints;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
@@ -40,6 +41,10 @@ public class Enemy : MonoBehaviour
     bool isWalking = false;
     bool waitingForJump = false;
 
+    float detectPlayerDistance = 6f;
+    float aggroDistance = 4f;
+    float lastSeenDistanceFromPlayer = 67;
+
 
 
     void Start()
@@ -64,6 +69,15 @@ public class Enemy : MonoBehaviour
     void Update()
     {
         walkInput = inputManager.WalkInput;
+        if (CheckIfPlayerIsInArea(detectPlayerDistance))
+        {
+            ChangeState(enemyStates.Aggro);
+        }
+        else
+        {
+            ChangeState(enemyStates.Patrolling);
+        }
+
     }
     private void FixedUpdate()
     {
@@ -100,9 +114,14 @@ public class Enemy : MonoBehaviour
     {
         lookable?.RotatePlayerToPosition(inputManager.TargetPosition);
         shootable?.LookAtTarget(inputManager.TargetPosition);
-        if (inputManager.ShootPressed)
+        WalkToPosition(inputManager.WalkInput, 0.1f);
+        //checks if the distance is lower or equal to aggro distance (if not, it shouldnt shoot)
+        if (lastSeenDistanceFromPlayer <= aggroDistance)
         {
-            shootable?.ShootBullet(inputManager.TargetPosition);
+            if (inputManager.ShootPressed)
+            {
+                shootable?.ShootBullet(inputManager.TargetPosition);
+            }
         }
     }
 
@@ -116,7 +135,7 @@ public class Enemy : MonoBehaviour
         //interchangeable during runtime
         GetComponent<Ijumpable>()?.JumpNow();
         print("ememyJump");
-        yield return new WaitForSeconds(Random.Range(7,16));
+        yield return new WaitForSeconds(Random.Range(7, 16));
         waitingForJump = false;
     }
 
@@ -144,5 +163,27 @@ public class Enemy : MonoBehaviour
     public void WalkToPosition(Vector2 thisWalkInput, float movementSpeed)
     {
         movement?.Move(thisWalkInput * movementSpeed);
+    }
+
+    bool CheckIfPlayerIsInArea(float detectDistance)
+    {
+        bool playerInArea = false;
+        float actualDistance = Vector2.Distance(gameObject.transform.position, inputManager.TargetPosition);
+        lastSeenDistanceFromPlayer = actualDistance;
+        if (actualDistance <= detectDistance)
+        {
+            playerInArea = true;
+        }
+        print(actualDistance);
+        return playerInArea;
+    }
+
+    void ChangeState(enemyStates changeToState)
+    {
+        if (changeToState != currentState)
+        {
+            currentState = changeToState;
+            previousState = currentState;
+        }
     }
 }

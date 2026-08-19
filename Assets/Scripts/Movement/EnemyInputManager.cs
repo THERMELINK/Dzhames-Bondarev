@@ -62,8 +62,10 @@ public class EnemyInputManager : MonoBehaviour
         if (TellDistanceFromPlayer(player) < shootAtDistance)
         {
             shootNow = true;
+            shootNow = DecideHesitateShot();
         }
         return shootNow;
+
     }
 
     public void OverrideTargetPosition(Vector2 playerPos)
@@ -95,5 +97,18 @@ public class EnemyInputManager : MonoBehaviour
     void ChangeEnemyMovementEnabled(bool b)
     {
         ActionsAllowed = b;
+    }
+    
+    /// <summary>
+    /// decides if the enemy is too scared to shoot this current shot
+    /// </summary>
+    bool DecideHesitateShot()
+    {
+        bool toReturn = false;
+        if(UnityEngine.Random.Range(1,10) == 4)
+        {
+            toReturn = true;
+        }
+        return toReturn;
     }
 }
