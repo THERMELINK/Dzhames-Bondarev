@@ -174,7 +174,7 @@ public class Enemy : MonoBehaviour
         {
             playerInArea = true;
         }
-        print(actualDistance);
+        //  print(actualDistance);
         return playerInArea;
     }
 

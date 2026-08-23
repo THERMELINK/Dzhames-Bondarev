@@ -7,6 +7,7 @@ public class BulletBehavior : MonoBehaviour
     int thisBulletSpeed = 0;
     int thisBulletDamage = 20;
     bool isInitialized = false;
+    GameObject entityWhoShot;
     Health detectedHealth;
 
     // Update is called once per frame
@@ -20,14 +21,15 @@ public class BulletBehavior : MonoBehaviour
     }
 
     void MoveBullet()
-    { 
+    {
         //move to a certain direction with the bulletspeed in mind
         transform.Translate((thisDirection * thisBulletSpeed) * Time.deltaTime);
     }
 
     //initialises itself after being shot from a gun
-    public void initialiseBullet(Vector2 direction, int bulletSpeed)
+    public void initialiseBullet(Vector2 direction, int bulletSpeed, GameObject entity)
     {
+        entityWhoShot = entity;
         thisDirection = direction;
         thisBulletSpeed = bulletSpeed;
         StartCoroutine(BulletDestroyTimer(3f));
@@ -49,12 +51,16 @@ public class BulletBehavior : MonoBehaviour
     /// </summary>
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.GetComponent<Health>() != null)
+        if (collision.gameObject != entityWhoShot)
         {
-            print("hit detected");
-            detectedHealth = collision.gameObject.GetComponent<Health>();
-            detectedHealth?.RemoveHealth(thisBulletDamage);
-            Destroy(gameObject);
+            if (collision.gameObject.GetComponent<Health>() != null)
+            {
+                print("i hit"+ collision.gameObject);
+                detectedHealth = collision.gameObject.GetComponent<Health>();
+                detectedHealth?.RemoveHealth(thisBulletDamage);
+                Destroy(gameObject);
+            }
         }
+
     }
 }

@@ -124,7 +124,7 @@ public class BurstFireGun : MonoBehaviour, Ishootable
         canShoot = false;
         GameObject newBullet = Instantiate(bulletToShoot);
         newBullet.transform.position = bulletShootPoint.transform.position;
-        newBullet.GetComponent<BulletBehavior>().initialiseBullet(transform.right, 5);
+        newBullet.GetComponent<BulletBehavior>().initialiseBullet(transform.right, 5, gunOwner);
         //set speed + direction
         yield return new WaitForSeconds(shotTimer);
         canShoot = true;
