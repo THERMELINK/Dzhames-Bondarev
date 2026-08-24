@@ -1,9 +1,13 @@
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class ExtractPointManager : MonoBehaviour
 {
     public float extractTimer = 2f;
-    bool timerStarted = false;
+    [SerializeField] bool timerStarted = false;
+    [SerializeField] int mapNumber;
+
 
     // Update is called once per frame
     void Update()
@@ -12,10 +16,13 @@ public class ExtractPointManager : MonoBehaviour
         {
             extractTimer -= Time.deltaTime;
         }
-        else if(extractTimer < 0)
+        else if (extractTimer < 0 && timerStarted)
         {
             timerStarted = false;
             print("extracted");
+            GameStateManager.instance.WinPlayer();
+            GameProgressManager.instance.CompleteLevel(mapNumber);
+
         }
     }
 
@@ -24,7 +31,7 @@ public class ExtractPointManager : MonoBehaviour
         GameObject playerObject = GameStateManager.instance.TellPlayerObject();
         if (collision.gameObject == playerObject)
         {
-            if (timerStarted == true)
+            if (timerStarted != true)
             {
                 StartTimer(extractTimer);
             }

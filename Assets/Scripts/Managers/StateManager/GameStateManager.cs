@@ -19,6 +19,8 @@ public class GameStateManager : MonoBehaviour
     [SerializeField] List<GameObject> enemyObjects = new();
     [SerializeField] Camera cam;
 
+    [SerializeField] GameObject winScreenUI;
+    [SerializeField] GameObject loseScreenUI;
 
     bool playerCanMove = false;
     bool enemiesCanMove = false;
@@ -97,6 +99,20 @@ public class GameStateManager : MonoBehaviour
         StartCoroutine(CutSceneDelayBeforeMovement(time));
     }
 
+    void ShowUIElement(GameObject UIelement)
+    {
+        UIelement.SetActive(true);
+    }
+
+    public void FailPlayer()
+    {
+        EnterNewState(GameState.Failed);
+    }
+
+    public void WinPlayer()
+    {
+        EnterNewState(GameState.Completed);
+    }
 
     /// <summary>
     /// this method gives the player object to scripts that need it (for example a newly instantiated enemy who is clueless)
@@ -121,8 +137,12 @@ public class GameStateManager : MonoBehaviour
                 StartCutScene(3);
                 break;
             case GameState.Completed:
+                SetEntitiesMovementTo(false);
+                ShowUIElement(winScreenUI);
                 break;
             case GameState.Failed:
+                SetEntitiesMovementTo(false);
+                ShowUIElement (loseScreenUI);
                 break;
         }
     }

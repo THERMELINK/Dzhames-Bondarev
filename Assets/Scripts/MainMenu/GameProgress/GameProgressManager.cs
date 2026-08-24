@@ -1,20 +1,22 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameProgressManager : MonoBehaviour
 {
-    GameProgressManager managerInstance;
+    public static GameProgressManager instance;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    Dictionary<int,bool> levelCompleted = new Dictionary<int,bool>();
+    Dictionary<int, bool> levelCompleted = new Dictionary<int, bool>();
 
     private void Awake()
     {
         //making a singleton out of this manager
-        if(managerInstance != null && managerInstance != this)
+        if (instance != null && instance != this)
         {
             Destroy(gameObject);
         }
-        managerInstance = this;
+        instance = this;
         //making this object dont destroy on load, otherwise player would not make progress while game running
         DontDestroyOnLoad(gameObject);
     }
@@ -22,9 +24,9 @@ public class GameProgressManager : MonoBehaviour
     void Start()
     {
         //adding 3 levels (for now)
+        levelCompleted.Add(0, true);
         levelCompleted.Add(1, false);
         levelCompleted.Add(2, false);
-        levelCompleted.Add(3, false);
     }
 
     public void CompleteLevel(int number)
@@ -38,4 +40,24 @@ public class GameProgressManager : MonoBehaviour
             print("could not find level");
         }
     }
+
+    public void CheckCompletedLevels()
+    {
+        MapButtonStorage mapButtonstorage = FindFirstObjectByType<MapButtonStorage>();
+        List<Button> passedButtons = mapButtonstorage.TellMapButtons();
+        for (int i = 0; i < levelCompleted.Count; i++)
+        {
+            print("mapnumber" + i);
+            if (levelCompleted[i] == true)
+            {
+                passedButtons[i].image.color = Color.green;
+            }
+            else
+            {
+                passedButtons[i].image.color = Color.darkRed;
+            }
+        }
+    }
+
+
 }

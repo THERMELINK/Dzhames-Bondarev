@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ButtonManager : MonoBehaviour
 {
@@ -15,11 +16,12 @@ public class ButtonManager : MonoBehaviour
     public void SelectMap(MapNumberTeller map)
     {
         SelectedMap = map.TellMapNumber();
-        print(SelectedMap);
+        StartScene(map.TellSceneName());
     }
 
     public void ContinueToMapScreen()
     {
+        GameProgressManager.instance.CheckCompletedLevels();
         enableMapScreen = true;
         RefreshUIGroup();
     }
@@ -38,6 +40,11 @@ public class ButtonManager : MonoBehaviour
     {
         UIgroup1.SetActive(!enableMapScreen);
         UIgroup2.SetActive(enableMapScreen);
+    }
+
+    void StartScene(string name)
+    {
+        SceneManager.LoadScene(name);
     }
 }
 

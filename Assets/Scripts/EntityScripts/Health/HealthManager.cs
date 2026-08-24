@@ -19,7 +19,7 @@ public class HealthManager : MonoBehaviour, Health
     public void RemoveHealth(float amount)
     {
         currentHealth -= amount;
-        if(CheckIfDead())
+        if (CheckIfDead())
         {
             BeDead();
         }
@@ -55,6 +55,14 @@ public class HealthManager : MonoBehaviour, Health
     /// </summary>
     void BeDead()
     {
-        Destroy(gameObject);
+        if (gameObject == GameStateManager.instance.TellPlayerObject())
+        {
+            GameStateManager.instance.FailPlayer();
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
     }
 }
