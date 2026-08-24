@@ -15,7 +15,6 @@ public class Jump : MonoBehaviour, Ijumpable
     {
         if (canJump == true && collidedWithGround == true)
         {
-            print("jump");
             StartCoroutine(ActualJump());
         }
     }
@@ -31,7 +30,6 @@ public class Jump : MonoBehaviour, Ijumpable
         canJump = false;
         yield return new WaitForSeconds(1.5f);
         canJump = true;
-        print("can jump again");
     }
 
     //checks for collission with ground, or enemy

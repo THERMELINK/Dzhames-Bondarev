@@ -7,7 +7,7 @@ public class GameProgressManager : MonoBehaviour
 {
     public static GameProgressManager instance;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    Dictionary<int, bool> levelCompleted = new Dictionary<int, bool>();
+    public Dictionary<int, bool> levelCompleted = new Dictionary<int, bool>();
 
     [SerializeField] int enemiesKilled = 0;
 
@@ -25,9 +25,9 @@ public class GameProgressManager : MonoBehaviour
     void Start()
     {
         //adding 3 levels (for now)
-        levelCompleted.Add(0, false);
-        levelCompleted.Add(1, false);
-        levelCompleted.Add(2, false);
+        levelCompleted.Add(0, true);
+        levelCompleted.Add(1, true);
+        levelCompleted.Add(2, true);
 
     }
     private void OnEnable()
@@ -43,12 +43,14 @@ public class GameProgressManager : MonoBehaviour
     {
         if (levelCompleted.ContainsKey(number))
         {
+            print("completed level" + number);
             levelCompleted[number] = true;
         }
         else
         {
             print("could not find level");
         }
+        print(levelCompleted);
     }
 
     public Dictionary<int, bool> TellWhichLevelsCompleted() => levelCompleted;

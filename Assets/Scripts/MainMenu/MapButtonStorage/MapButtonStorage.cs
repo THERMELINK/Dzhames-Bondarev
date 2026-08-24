@@ -14,14 +14,33 @@ public class MapButtonStorage : MonoBehaviour
         Dictionary<int, bool> passedDictionary = GameProgressManager.instance.TellWhichLevelsCompleted();
         for (int i = 0; i < passedDictionary.Count; i++)
         {
-            print("mapnumber" + i);
+            //if the current map is completed
             if (passedDictionary[i] == true)
             {
+                //umlock the next map
+                if (i < mapbuttons.Count)
+                {
+                    mapbuttons[i + 1].GetComponent<MapNumberTeller>().UnlockMap();
+                }
                 mapbuttons[i].image.color = Color.green;
             }
             else
             {
-                mapbuttons[i].image.color = Color.darkRed;
+                if (i > 0 && passedDictionary[i - 1] == true)
+                {
+                    mapbuttons[i].image.color = Color.white;
+                }
+                else
+                {
+                    mapbuttons[i].image.color = Color.darkRed;
+                }
+            }
+
+            //force tutorial to be open
+            if (i == 0)
+            {
+                mapbuttons[i].GetComponent<MapNumberTeller>().UnlockMap();
+                mapbuttons[i].image.color = Color.green;
             }
         }
     }

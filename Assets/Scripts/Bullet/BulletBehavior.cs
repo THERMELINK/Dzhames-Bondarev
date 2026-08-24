@@ -55,7 +55,6 @@ public class BulletBehavior : MonoBehaviour
         {
             if (collision.gameObject.GetComponent<Health>() != null)
             {
-                print("i hit"+ collision.gameObject);
                 detectedHealth = collision.gameObject.GetComponent<Health>();
                 detectedHealth?.RemoveHealth(thisBulletDamage);
                 Destroy(gameObject);

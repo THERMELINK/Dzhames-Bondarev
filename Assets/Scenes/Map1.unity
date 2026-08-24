@@ -5754,7 +5754,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ExtractPointManager
   extractTimer: 2
   timerStarted: 0
-  mapNumber: 2
+  mapNumber: 1
 --- !u!61 &2020876567
 BoxCollider2D:
   m_ObjectHideFlags: 0

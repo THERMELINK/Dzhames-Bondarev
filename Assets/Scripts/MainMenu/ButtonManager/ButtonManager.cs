@@ -12,7 +12,6 @@ public class ButtonManager : MonoBehaviour
 
     private void Start()
     {
-        print("refreshing UI start");
         RefreshUIGroup();
         mapButtonGameObject.GetComponent<MapButtonStorage>().UpdateButtons();
         mapButtonGameObject.GetComponent<MapButtonStorage>().UpdateKillCountText();
@@ -20,16 +19,19 @@ public class ButtonManager : MonoBehaviour
     }
     public void SelectMap(MapNumberTeller map)
     {
-        SelectedMap = map.TellMapNumber();
-        StartScene(map.TellSceneName());
+        if (map.TellIfMapUnlocked())
+        {
+            SelectedMap = map.TellMapNumber();
+            StartScene(map.TellSceneName());
+        }
     }
 
     public void ContinueToMapScreen()
     {
-        print("refreshing UI start");
         enableMapScreen = true;
         RefreshUIGroup();
         mapButtonGameObject.GetComponent<MapButtonStorage>().UpdateButtons();
+        RefreshUIGroup();
     }
     public void Quit()
     {

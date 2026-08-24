@@ -73,7 +73,6 @@ public class Player : MonoBehaviour
             if (equippedGun != null)
             {
                 shootable = equippedGun.GetComponent<Ishootable>();
-                print("shootInput");
                 shootable?.ShootBullet(inputManager.MousePosition);
             }
         }

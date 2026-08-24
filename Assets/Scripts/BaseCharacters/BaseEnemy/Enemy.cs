@@ -134,7 +134,6 @@ public class Enemy : MonoBehaviour
         waitingForJump = true;
         //interchangeable during runtime
         GetComponent<Ijumpable>()?.JumpNow();
-        print("ememyJump");
         yield return new WaitForSeconds(Random.Range(7, 16));
         waitingForJump = false;
     }
