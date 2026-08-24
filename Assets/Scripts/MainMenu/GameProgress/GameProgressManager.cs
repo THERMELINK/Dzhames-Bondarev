@@ -26,8 +26,8 @@ public class GameProgressManager : MonoBehaviour
     {
         //adding 3 levels (for now)
         levelCompleted.Add(0, true);
-        levelCompleted.Add(1, true);
-        levelCompleted.Add(2, true);
+        levelCompleted.Add(1, false);
+        levelCompleted.Add(2, false);
 
     }
     private void OnEnable()
