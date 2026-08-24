@@ -5,13 +5,18 @@ public class ButtonManager : MonoBehaviour
 {
     [SerializeField] GameObject UIgroup1;
     [SerializeField] GameObject UIgroup2;
+    [SerializeField] GameObject mapButtonGameObject;
     public int SelectedMap = 0;
     bool enableMapScreen = false;
 
 
     private void Start()
     {
+        print("refreshing UI start");
         RefreshUIGroup();
+        mapButtonGameObject.GetComponent<MapButtonStorage>().UpdateButtons();
+        mapButtonGameObject.GetComponent<MapButtonStorage>().UpdateKillCountText();
+
     }
     public void SelectMap(MapNumberTeller map)
     {
@@ -21,9 +26,10 @@ public class ButtonManager : MonoBehaviour
 
     public void ContinueToMapScreen()
     {
-        GameProgressManager.instance.CheckCompletedLevels();
+        print("refreshing UI start");
         enableMapScreen = true;
         RefreshUIGroup();
+        mapButtonGameObject.GetComponent<MapButtonStorage>().UpdateButtons();
     }
     public void Quit()
     {
@@ -32,7 +38,7 @@ public class ButtonManager : MonoBehaviour
 
     public void GoBack()
     {
-        enableMapScreen=false;
+        enableMapScreen = false;
         RefreshUIGroup();
     }
 

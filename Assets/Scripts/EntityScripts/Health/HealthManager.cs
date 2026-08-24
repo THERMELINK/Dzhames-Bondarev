@@ -1,3 +1,4 @@
+using System;
 using System.Linq.Expressions;
 using UnityEngine;
 
@@ -5,6 +6,7 @@ public class HealthManager : MonoBehaviour, Health
 {
     float currentHealth = 0;
     float maxHealth = 100;
+    public static event Action<int> OnEnemyDeath;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -61,8 +63,13 @@ public class HealthManager : MonoBehaviour, Health
         }
         else
         {
+            //object is not the player, so it is an enemy
+            //trigger add 1 to killcount
+            OnEnemyDeath?.Invoke(1);
             Destroy(gameObject);
         }
 
     }
+
+
 }
